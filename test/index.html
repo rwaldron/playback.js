@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Playback.js Test Suite</title>
+  <link rel="stylesheet" href="qunit/qunit.css" type="text/css" media="screen">
+  <style>
+    
+    #chroma-demo-iframe {
+      background:white;
+    }
+    #chroma-demo-panel {
+      position: absolute;
+      display: none;
+      z-index: 9999;
+      background: white;
+    }
+  
+  </style>
+  
+  <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+  <script type="text/javascript" src="qunit/qunit.js"></script>
+  <script type="text/javascript" src="../playback.js"></script> 
+  
+  <script type="text/javascript" src="playback.unit.js"></script>
+  
+  
+  
+</head>
+<body>
+  
+  <button id="chroma-demo-trigger">Run Demo</button>
+  
+  <div id="chroma-demo-panel">
+    <a href="">close</a>
+    <iframe id="chroma-demo-iframe"></iframe>
+  </div>
+  
+  <h1 id="qunit-header">chromaKey Test Suite</h1>
+  <h2 id="qunit-banner"></h2>
+  <div id="qunit-testrunner-toolbar"></div>
+  <h2 id="qunit-userAgent"></h2>
+  <ol id="qunit-tests"></ol>
+  <div id="qunit-fixture">
+	</div>
+    
+    
+
+    <div> 
+      <video id="snowdriving" controls >
+        <source src="assets/snowdriving.ogv">       
+      </video>
+    </div>   
+</body>
+</html>
