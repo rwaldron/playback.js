@@ -27,10 +27,7 @@
   
   function Playback( id, options ) {
 
-    //  Store ref to `this` context
-    var self = this;
-    
-    options = options || {};
+    var options = options || {};
     
     //  Store a ref to the media element - needs better checks
     this.media = doc.getElementById( id ) || doc.getElementsByTagName( id )[0] ;
@@ -47,60 +44,51 @@
     //  Node specific properties
     this.data = nodeData[ this.type ];
     
-    //  Raw caching for last frame data
-    this.last = [];
-
-    //  Ceil caching for last frame data
-    //  Will be set to Uint16Array
-    this.Uint16Ceil;
-    
-    
-    
     var initKeying = function() {
 
       //  Store a ref to the video element dimensions
-      self.width = ( options.width || self.media[ self.data.width ] ) * self.scale;
-      self.height = ( options.height || self.media[ self.data.height ] ) * self.scale; 
+      this.width = ( options.width || this.media[ this.data.width ] ) * this.scale;
+      this.height = ( options.height || this.media[ this.data.height ] ) * this.scale; 
 
       //  Create canvases, auto-id unless provided
-      self.reference = self.canvas( options.reference || "chroma-ref-" + self.guid );
-      self.playback = self.canvas( options.playback || "chroma-chr-" + self.guid );
+      this.reference = this.canvas( options.reference || "chroma-ref-" + this.guid );
+      this.playback = this.canvas( options.playback || "chroma-chr-" + this.guid );
 
       //  Stash the reference canvas
-      self.reference.style.display = "none";
+      this.reference.style.display = "none";
 
 
       //  If style specified, apply
       if ( options.css ) {
         for ( var prop in options.css ) {
-          self.playback.style[ prop ] = options.css[ prop ];
+          this.playback.style[ prop ] = options.css[ prop ];
         }
       }
 
       //  Store refs to canvas contexts
-      self.referenceContext = self.reference.getContext("2d");
-      self.playbackContext = self.playback.getContext("2d");
+      this.referenceContext = this.reference.getContext("2d");
+      this.playbackContext = this.playback.getContext("2d");
 
 
       //  If just an image, then process immediately
-      if ( self.data.action === "process" ) {
+      if ( this.data.action === "process" ) {
 
-        self.process();
+        this.process();
 
       } else {
 
         //  Throttling 
-        self.timeout = options.timeout || 0;        
+        this.timeout = options.timeout || 0;        
 
         //  Register listener to handle playback rendering
-        self.media.addEventListener( "play", function() {
+        this.media.addEventListener( "play", function() {
 
           //  Call the processing throttler
-          self.throttle();
+          this.throttle();
 
-        }, false);  
+        }.bind( this ) , false);  
       }
-    };
+    }.bind( this );
     
     //  Media exists
     if ( this.media ) {
@@ -164,8 +152,7 @@
       
     var width = this.width, 
         height = this.height,
-        ceils = [], 
-        last, frame, frameLen, r, g, b, idx, hsl, hueIdx;
+        frame;
     
     
     //  Draw current video frame
